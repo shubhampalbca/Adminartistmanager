@@ -259,4 +259,4 @@
     
     
   </body>
-</html>
+</html><?php /**PATH C:\wamp64\www\adminartimanager\resources\views/welcome.blade.php ENDPATH**/ ?>

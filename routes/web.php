@@ -13,7 +13,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
- Route::get('/', [AdminController::class, 'login']);
+ 
 
 //Admin route Start//
 Route::middleware(['admin'])->group(function(){
