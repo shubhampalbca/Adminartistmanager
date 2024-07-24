@@ -1,0 +1,16 @@
+<meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+
+  <meta name="description" content="Put your description here.">
+
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="<?php echo e(asset('logo/sss.jpg')); ?>" rel="icon">
+
+ <link href="https://fonts.gstatic.com" rel="preconnect">
+
+<link href="<?php echo e(asset('assets/vendor/bootstrap/css/bootstrap.min.css')); ?>" rel="stylesheet">
+<link href="<?php echo e(asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')); ?>" rel="stylesheet">
+<link href="<?php echo e(asset('assets/css/style.css')); ?>" rel="stylesheet">
+
+<?php /**PATH C:\wamp64\www\adminartimanager\resources\views/admin/include/headerlink.blade.php ENDPATH**/ ?>
