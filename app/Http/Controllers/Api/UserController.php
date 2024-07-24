@@ -63,7 +63,7 @@ class UserController extends Controller
             }
 
             // Store email in the session
-        
+            
 
             // Prepare data for the email
             $mailData = [
