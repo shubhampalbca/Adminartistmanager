@@ -40,8 +40,8 @@ class Kernel extends HttpKernel
         'admin' => [
             \App\Http\Middleware\AdminAuth::class,
         ],
-        'artist' => [
-            \App\Http\Middleware\ArtistAuth::class,
+        'user' => [
+            \App\Http\Middleware\UserAuth::class,
         ],
         'manager' => [
             \App\Http\Middleware\ManagersAuth::class,

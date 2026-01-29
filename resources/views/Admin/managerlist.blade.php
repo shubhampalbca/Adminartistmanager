@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      @include('admin/include/headerlink')
-      <title>User List </title>
-      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<head>
+   @include('admin/include/headerlink')
+   <title>User List </title>
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
       <style>
       
       </style> -->
-   </head>
-   <body>
-      @include('admin/include/header')
-      @include('admin/include/sidebar')
-      <main id="main" class="main">
-        
-         <!-- End Page Title -->
-         <section class="section dashboard">
-            <div class="row">
+</head>
+
+<body>
+   @include('admin/include/header')
+   @include('admin/include/sidebar')
+   <main id="main" class="main">
+
+      <!-- End Page Title -->
+      <section class="section dashboard">
+         <div class="row">
             <div class="container-fluid px-4">
                <!-- <h1 class="mt-4">User List</h1> -->
                <div class="card mb-4">
@@ -47,10 +49,13 @@
                               <td class="name">{{ $item->mobile }}</td>
                               <td class="name">{{ $item->gender }}</td>
                               <td class="productlist name">
-                              <div class="product-box">
-                                 <img src="{{ asset('uploads/user_profile/' . $item->user_profile) }}"  style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;" alt="vdf">
-                               </div>
-                              
+                                 <div class="product-box">
+                                    @if(!empty($item->user_profile))
+                                    <img src="{{ asset('uploads/user_profile/' . $item->user_profile) }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;" alt="Profile">
+                                    @else
+                                    <span class="text-muted small">No image</span>
+                                    @endif
+                                 </div>
                               </td>
                            </tr>
                            @endforeach
@@ -61,10 +66,11 @@
                   </div>
                </div>
             </div>
-         </section>
-      </main>
-      @include('admin/include/footer')
-   </body>
+      </section>
+   </main>
+   @include('admin/include/footer')
+</body>
+
 </html>
 @if(session('success'))
 <div class="modal fade custom-modal" id="successModal">
@@ -83,11 +89,11 @@
    </div>
 </div>
 <script>
-   $(document).ready(function () {
-       $("#successModal").modal('show');
-       $("#successModal button[data-dismiss='modal']").on('click', function () {
-           $("#successModal").modal('hide');
-       });
+   $(document).ready(function() {
+      $("#successModal").modal('show');
+      $("#successModal button[data-dismiss='modal']").on('click', function() {
+         $("#successModal").modal('hide');
+      });
    });
 </script>
 @endif

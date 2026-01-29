@@ -2,7 +2,7 @@
 <html lang="en">
    <head>
       @include('admin/include/headerlink')
-      <title>Artists </title>
+      <title>Users </title>
    </head>
    <body>
       @include('admin/include/header')
@@ -14,10 +14,10 @@
                <!-- <h1 class="mt-4">Artist</h1> -->
                <div class="card mb-4">
                   <div class="card-header">
-                     <i class="fas fa-table me-1"></i> Artist
-                     <button type="button" class="btn btn-primary btn-add-artist btn-primary-btn-h" data-bs-toggle="modal"
+                     <i class="fas fa-table me-1"></i> User
+                     <button type="button" class="btn btn-primary btn-add-user btn-primary-btn-h" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
-                     Add Artist
+                     Add User
                      </button>
                   </div>
                   <div class="card-body">
@@ -37,7 +37,7 @@
                            </tr>
                         </thead>
                         <tbody>
-                           @foreach ($artists as $item)
+                           @foreach ($users as $item)
                            <tr>
                               <td class="name">{{ $item->id }}</td>
                               <td class="name">{{ $item->name }}</td>
@@ -46,7 +46,7 @@
                               <td class="name">{{ $item->mobile }}</td>
                               <td class="name">{{ $item->category }}</td>
                               <td class="name">
-                                 <a href="{{ url('active-artist/'.$item->id) }}" class="btn btn-sm btn-{{ $item->status ? 'success':'danger'}}">
+                                 <a href="{{ url('active-user/'.$item->id) }}" class="btn btn-sm btn-{{ $item->status ? 'success':'danger'}}">
                                  {{ $item->status ? 'active':'inactive'}}
                                  </a>
                               </td>
@@ -66,7 +66,7 @@
                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ url('update-artist/'.$item->id) }}" method="post" enctype="multipart/form-data">
+                                        <form action="{{ url('update-user/'.$item->id) }}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
                                           <label for="name">Name:</label>
@@ -112,7 +112,7 @@
                         </tbody>
                      </table>
                      <br>
-                     {{ $artists->links('pagination::bootstrap-4') }}
+                     {{ $users->links('pagination::bootstrap-4') }}
                   </div>
                </div>
         
@@ -121,11 +121,11 @@
                   <div class="modal-dialog">
                      <div class="modal-content">
                         <div class="modal-header">
-                           <h1 class="modal-title fs-5 " id="exampleModalLabel">Add Artist</h1>
+                           <h1 class="modal-title fs-5 " id="exampleModalLabel">Add User</h1>
                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                           <form action="{{url('insertartist')}}" method="post" enctype="multipart/form-data">
+                           <form action="{{url('insertuser')}}" method="post" enctype="multipart/form-data">
                               @csrf
                               @if ($errors->any())
                               <div class="alert alert-danger">

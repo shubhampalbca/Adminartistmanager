@@ -1,5 +1,3 @@
-
-
 <?php
 
 return [
@@ -42,17 +40,17 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-         'admin' => [
+        'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
         ],
-        'artist' => [ 
+        'user' => [
             'driver' => 'session',
-            'provider' => 'artists', 
+            'provider' => 'users',
         ],
-         'manager' => [ 
+        'manager' => [
             'driver' => 'session',
-            'provider' => 'managers', 
+            'provider' => 'managers',
         ],
     ],
 
@@ -82,19 +80,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
-        'artists' => [ // Your custom provider
+        'managers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Artist::class, // Use the correct model class
+            'model' => App\Models\Manager::class,
         ],
-         'managers' => [ 
-            'driver' => 'eloquent',
-            'model' => App\Models\Manager::class, 
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
@@ -129,14 +118,7 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-
-        'artists' => [
-            'provider' => 'artists',
-            'table' => 'password_reset_tokens',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-         'managers' => [
+        'managers' => [
             'provider' => 'managers',
             'table' => 'password_reset_tokens',
             'expire' => 60,

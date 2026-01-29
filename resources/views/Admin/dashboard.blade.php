@@ -1,105 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      @include('admin/include/headerlink')
-      <title> Admin-Dashboard - </title>
-     
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> 
-   </head>
 
-   <style></style>
-   <body>
+<head>
+   @include('admin/include/headerlink')
+   <title> Admin-Dashboard - </title>
 
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
 
-      @include('admin/include/header')
-      @include('admin/include/sidebar')
-      <main id="main" class="main">
-         <div class="pagetitle">
-            <h1>Dashboard</h1>
-            <nav>
-               <ol class="breadcrumb">
-            
-                  <li class="breadcrumb-item active">Dashboard</li>
-               </ol>
-            </nav>
-         </div>
-         <!-- End Page Title -->
-         <section class="section dashboard">
-            <div class="row">
-               <!-- Left side columns -->
-               <div class="col-lg-12">
-                  <div class="row">
-                     <!-- Sales Card -->
-                     <div class="col-xxl-4 col-md-4">
-                        <div class="card info-card sales-card  bg-c-green-in">
-                          <div class="card-body">
-                           <p>Total Artist <span>| Today</span></p>
-                           <div class="d-flex align-items-center">
-                              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-people"></i>
-                              </div>
-                              <div class="ps-3">
-                                    <p>{{$count}}</p>
-                              </div>
-                           </div>
-                        </div>
+<style></style>
+
+<body>
 
 
+   @include('admin/include/header')
+   @include('admin/include/sidebar')
+   <main id="main" class="main">
+      <div class="pagetitle">
+         <h1>Dashboard</h1>
+         <nav>
+            <ol class="breadcrumb">
 
-
-                        </div>
+               <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+         </nav>
+      </div>
+      <!-- End Page Title -->
+      <section class="section dashboard">
+         <div class="row">
+            <!-- Card 1: Total Users -->
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-3 mb-lg-0">
+               <div class="card info-card sales-card h-100 border-0 shadow-sm">
+                  <div class="card-body d-flex align-items-center justify-content-between">
+                     <div>
+                        <p class="text-uppercase text-muted small mb-1">Total Users</p>
+                        <h4 class="mb-0 fw-bold">{{ $usercount }}</h4>
                      </div>
-                     <div class="col-xxl-4 col-md-4">
-                        <div class="card info-card sales-card bg-c-pink-in">
-                           
-                           <div class="card-body">
-                              <p>Total Users <span>| Today</span></p>
-                              <div class="d-flex align-items-center">
-                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-people"></i>
-                                 </div>
-                                 <div class="ps-3">
-                                    <hp>{{$usercount}}</p>
-                                  
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-xxl-4 col-md-4">
-                        <div class="card info-card bg-c-blue-in sales-card ">
-                           <div class="filter">
-                           
-                              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                 <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                 </li>
-                                 <li><a class="dropdown-item" href="#">Today</a></li>
-                                 <li><a class="dropdown-item" href="#">This Month</a></li>
-                                 <li><a class="dropdown-item" href="#">This Year</a></li>
-                              </ul>
-                           </div>
-                           <div class="card-body">
-                              <p>Sales <span>| Today</span></p>
-                              <div class="d-flex align-items-center">
-                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-cart"></i>
-                                 </div>
-                                 <div class="ps-3">
-                                    <p>145<p>
-                                    <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
+                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary" style="width:56px;height:56px;">
+                        <i class="bi bi-people fs-4"></i>
                      </div>
                   </div>
                </div>
             </div>
-         </section>
-      </main>
-      @include('admin/include/footer')
-   </body>
+            <!-- Card 2: Total Managers -->
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-3 mb-lg-0">
+               <div class="card info-card sales-card h-100 border-0 shadow-sm">
+                  <div class="card-body d-flex align-items-center justify-content-between">
+                     <div>
+                        <p class="text-uppercase text-muted small mb-1">Total Managers</p>
+                        <h4 class="mb-0 fw-bold">{{ $managercount }}</h4>
+                     </div>
+                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success" style="width:56px;height:56px;">
+                        <i class="bi bi-person-badge fs-4"></i>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- Card 3: Events This Month -->
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-3 mb-lg-0">
+               <div class="card info-card sales-card h-100 border-0 shadow-sm">
+                  <div class="card-body d-flex align-items-center justify-content-between">
+                     <div>
+                        <p class="text-uppercase text-muted small mb-1">Events This Month</p>
+                        <h4 class="mb-0 fw-bold">{{ $eventsthismonth }}</h4>
+                        <span class="text-{{ $percentchange >= 0 ? 'success' : 'danger' }} small fw-bold">{{ $percentchange }}%</span>
+                        <span class="text-muted small"> vs last month</span>
+                     </div>
+                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-info bg-opacity-10 text-info" style="width:56px;height:56px;">
+                        <i class="bi bi-calendar-event fs-4"></i>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- Card 4: Total Events -->
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-3 mb-lg-0">
+               <div class="card info-card sales-card h-100 border-0 shadow-sm">
+                  <div class="card-body d-flex align-items-center justify-content-between">
+                     <div>
+                        <p class="text-uppercase text-muted small mb-1">Total Events</p>
+                        <h4 class="mb-0 fw-bold">{{ $eventcount }}</h4>
+                     </div>
+                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning" style="width:56px;height:56px;">
+                        <i class="bi bi-collection fs-4"></i>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+   </main>
+   @include('admin/include/footer')
+</body>
+
 </html>
 @if(session('success'))
 <div class="modal fade custom-modal" id="successModal">
@@ -118,11 +110,11 @@
    </div>
 </div>
 <script>
-   $(document).ready(function () {
-       $("#successModal").modal('show');
-       $("#successModal button[data-dismiss='modal']").on('click', function () {
-           $("#successModal").modal('hide');
-       });
+   $(document).ready(function() {
+      $("#successModal").modal('show');
+      $("#successModal button[data-dismiss='modal']").on('click', function() {
+         $("#successModal").modal('hide');
+      });
    });
 </script>
 @endif

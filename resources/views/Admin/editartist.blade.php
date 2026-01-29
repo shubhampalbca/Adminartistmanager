@@ -2,7 +2,7 @@
 <html lang="en">
    <head>
       @include('admin/include/headerlink')
-      <title>Artists </title>
+      <title>Users </title>
    </head>
    <body>
       @include('admin/include/header')
@@ -14,22 +14,22 @@
                <!-- <h1 class="mt-4">Artist</h1> -->
                <div class="card mb-4">
                   <div class="card-header">
-                     <i class="fas fa-table me-1"></i>Edit Artist
-                             <form action="{{ url('update-artist/'.$artists->id) }}" method="post" enctype="multipart/form-data">
+                     <i class="fas fa-table me-1"></i>Edit User
+                             <form action="{{ url('update-user/'.$users->id) }}" method="post" enctype="multipart/form-data">
                              @csrf
                              @method('PUT')
                               
                               <label for="name">Name:</label>
-                              <input type="text" id="name" class="form-control"  name="name" value="{{$artists->name}}">
+                              <input type="text" id="name" class="form-control"  name="name" value="{{$users->name}}">
                               <label for="name">Email:</label>
-                              <input type="email" id="email" class="form-control"  name="name" value="{{$artists->name}}">
+                              <input type="email" id="email" class="form-control"  name="email" value="{{$users->email}}">
                               <label for="name">Mobile:</label>
-                              <input type="text" id="mobile" class="form-control"  name="mobile" value="{{$artists->mobile}}">
+                              <input type="text" id="mobile" class="form-control"  name="mobile" value="{{$users->mobile}}">
                               <label for="image">Password :</label>
-                              <input type="text" class="form-control"  name="password" value="{{$artists->password}}">
+                              <input type="text" class="form-control"  name="password" value="{{$users->password}}">
                               <label for="image">Profile :</label>
                               <input type="file" class="form-control" id="image" name="profile" require><br>
-                              <img src="{{ asset('uploads/profile/' . $artists->profile) }}"  width="50px" height="50px" alt="image" ><br><br>
+                              <img src="{{ asset('uploads/profile/' . $users->profile) }}"  width="50px" height="50px" alt="image" ><br><br>
                               <input type="submit" class="btn btn-success btn-primary-btn-h" value="Submit">
                            </form>
                     

@@ -16,6 +16,6 @@ Route::post('verify-otp/{identifier}', [UserController::class, 'verifyOTP']);
 
 Route::post('login', [UserController::class, 'login']);
 
-Route::post('/profile_update/{id}',[UserController::class,'profile_update']);
+Route::post('/profile_update/{id}', [UserController::class, 'profile_update']);
 
 Route::get('hello', [UserController::class, 'hello']);

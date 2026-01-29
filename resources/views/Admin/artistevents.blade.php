@@ -2,7 +2,7 @@
 <html lang="en">
    <head>
       @include('admin/include/headerlink')
-      <title>Artists Events </title>
+      <title>Users Events </title>
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> -->
@@ -18,7 +18,7 @@
                <!-- <h1 class="mt-4">Artists Events</h1> -->
                <div class="card mb-4">
                   <div class="card-header">
-                     <i class="fas fa-table me-1"></i>Artists Events
+                     <i class="fas fa-table me-1"></i>Users Events
                   </div>
                   <div class="card-body">
                      <table>
@@ -26,7 +26,7 @@
                            <tr>
                               <th class="name sidebar-bg">Id</th>
                               <th class="name sidebar-bg">Title</th>
-                              <th class="name sidebar-bg">Artist Id</th>
+                              <th class="name sidebar-bg">User Id</th>
                               <th class="name sidebar-bg">Description</th>
                               <th class="name sidebar-bg">Events</th>
                               <th class="name sidebar-bg">Created_at</th>

@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
         body {
-            padding-top: 56px; /* Adjust according to the height of your navbar */
+            padding-top: 56px;
+            /* Adjust according to the height of your navbar */
         }
 
         .footer {
@@ -53,15 +54,18 @@
 
     <!-- Main Content Area -->
     <div class="container mt-4">
-        <h2>Welcome to the Manager Dashboard</h2>
-        <p>This is a simple example of a one-page manager dashboard using Bootstrap.</p>
-        <!-- Add your content and components here -->
+        <h2>Welcome, {{ Auth::guard('manager')->user()->name ?? 'Manager' }}</h2>
+        <p>You are logged in as Manager. Use the menu above to navigate.</p>
+        <div class="mt-3">
+            <a href="{{ url('managerprofile') }}" class="btn btn-primary">My Profile</a>
+            <a href="{{ url('manager/events') }}" class="btn btn-success">My Posts / Add Post</a>
+        </div>
 
     </div>
 
     <!-- Footer -->
     <div class="footer">
-        <p>&copy; 2024 Your Company Name</p>
+        <p>&copy; {{ date('Y') }} Admin Arti Manager</p>
     </div>
 
     <!-- Bootstrap JS and dependencies (jQuery) -->

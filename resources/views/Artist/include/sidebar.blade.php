@@ -1,21 +1,21 @@
 <aside id="sidebar" class="sidebar ">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+  <ul class="sidebar-nav" id="sidebar-nav">
 
-      <li class="nav-item">
-        <a class="nav-link " href="{{url('Artistdashboard')}}">
-          <i class="bi bi-grid"></i>
-          <span>Dashboard</span>
-        </a>
-      </li><!-- End Dashboard Nav -->
+    <li class="nav-item">
+      <a class="nav-link " href="{{ url('Userdashboard') }}">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
 
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="{{url('events')}}">
-          <i class="bi bi-person"></i>
-          <span>Events</span>
-        </a>
-      </li><!--
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{url('events')}}">
+        <i class="bi bi-person"></i>
+        <span>Events</span>
+      </a>
+    </li><!--
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -96,7 +96,7 @@
       </li>
        End Components Nav -->
 
-      <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -123,9 +123,9 @@
           </li>
         </ul>
       </li> -->
-      <!-- End Forms Nav -->
+    <!-- End Forms Nav -->
 
-      <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -142,9 +142,9 @@
           </li>
         </ul>
       </li> -->
-      <!-- End Tables Nav -->
+    <!-- End Tables Nav -->
 
-      <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -166,9 +166,9 @@
           </li>
         </ul>
       </li> -->
-      <!-- End Charts Nav -->
+    <!-- End Charts Nav -->
 
-      <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -190,59 +190,59 @@
           </li>
         </ul>
       </li> -->
-      <!-- End Icons Nav -->
+    <!-- End Icons Nav -->
 
-      
-      <!-- End Profile Page Nav -->
 
-      <!-- <li class="nav-item">
+    <!-- End Profile Page Nav -->
+
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
           <i class="bi bi-question-circle"></i>
           <span>F.A.Q</span>
         </a>
       </li> -->
-      <!-- End F.A.Q Page Nav -->
+    <!-- End F.A.Q Page Nav -->
 
-      <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-contact.html">
           <i class="bi bi-envelope"></i>
           <span>Contact</span>
         </a>
       </li> -->
-      <!-- End Contact Page Nav -->
+    <!-- End Contact Page Nav -->
 
-      <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-register.html">
           <i class="bi bi-card-list"></i>
           <span>Register</span>
         </a>
       </li> -->
-      <!-- End Register Page Nav -->
+    <!-- End Register Page Nav -->
 
-      <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-login.html">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Login</span>
         </a>
       </li> -->
-      <!-- End Login Page Nav -->
-<!-- 
+    <!-- End Login Page Nav -->
+    <!-- 
       <li class="nav-item">
         <a class="nav-link collapsed" href="pages-error-404.html">
           <i class="bi bi-dash-circle"></i>
           <span>Error 404</span>
         </a>
       </li> -->
-      <!-- End Error 404 Page Nav -->
+    <!-- End Error 404 Page Nav -->
 
-      <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-blank.html">
           <i class="bi bi-file-earmark"></i>
           <span>Blank</span>
         </a>
       </li> -->
-      <!-- End Blank Page Nav -->
+    <!-- End Blank Page Nav -->
 
-    </ul>
+  </ul>
 
-  </aside>
+</aside>

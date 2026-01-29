@@ -1,63 +1,70 @@
 <style>
-    .nav-link {
-        color: #333;
-        background-color: #fff;
-    }
+  .nav-link {
+    color: #333;
+    background-color: #fff;
+  }
 </style>
 <aside id="sidebar" class="sidebar sidebar-bg">
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+  <ul class="sidebar-nav" id="sidebar-nav">
 
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('Admindashboard') }}" aria-label="Dashboard">
-                <i class="bi bi-grid" aria-hidden="true" style="color: #000;"></i>
-                <span style="color: #000;">Dashboard</span>
-            </a>
+    <li class="nav-item">
+      <a class="nav-link" href="{{ url('Admindashboard') }}" aria-label="Dashboard">
+        <i class="bi bi-grid" aria-hidden="true" style="color: #000;"></i>
+        <span style="color: #000;">Dashboard</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url('category') }}">
+        <i class="bi bi-menu-button-wide" style="color: #000;"></i>
+        <span style="color: #000;">Category</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url('admin/events') }}">
+        <i class="bi bi-plus-square" style="color: #000;"></i>
+        <span style="color: #000;">My Posts</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <!-- Link that toggles the collapse of the sub-menu -->
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-journal-text" style="color: #000;"></i><span style="color: #000;">Users</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <!-- Collapsible sub-menu -->
+      <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{{ url('adduser') }}">
+            <i class="bi bi-circle"></i><span style="color: #000;">Users Lists</span>
+          </a>
         </li>
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('category') }}">
-                <i class="bi bi-menu-button-wide" style="color: #000;"></i>
-                <span style="color: #000;">Category</span>
-            </a>
+        <li>
+          <a href="{{ url('userevents') }}">
+            <i class="bi bi-circle"></i><span style="color: #000;"> Users Events</span>
+          </a>
         </li>
-
-        <li class="nav-item">
-            <!-- Link that toggles the collapse of the sub-menu -->
-            <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-text" style="color: #000;"></i><span style="color: #000;">Artists</span>
-                <i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <!-- Collapsible sub-menu -->
-            <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="{{ url('addartist') }}">
-                        <i class="bi bi-circle"></i><span style="color: #000;">Artists Lists</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ url('artistevents') }}">
-                        <i class="bi bi-circle"></i><span style="color: #000;"> Artists Events</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('userslist') }}">
-                <i class="bi bi-people" style="color: #000;"></i>
-                <span style="color: #000;">Users List</span>
-            </a>
-        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url('userslist') }}">
+        <i class="bi bi-people" style="color: #000;"></i>
+        <span style="color: #000;">Users List</span>
+      </a>
+    </li>
 
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('/manager-list') }}">
-                <i class="bi bi-menu-button-wide" style="color: #000;"></i>
-                <span style="color: #000;">Manager List</span>
-            </a>
-        </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url('/manager-list') }}">
+        <i class="bi bi-menu-button-wide" style="color: #000;"></i>
+        <span style="color: #000;">Manager List</span>
+      </a>
+    </li>
 
-        <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -84,9 +91,9 @@
           </li>
         </ul>
       </li> -->
-        <!-- End Forms Nav -->
+    <!-- End Forms Nav -->
 
-        <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -103,9 +110,9 @@
           </li>
         </ul>
       </li> -->
-        <!-- End Tables Nav -->
+    <!-- End Tables Nav -->
 
-        <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-bar-chart"></i><span>Charts</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -127,9 +134,9 @@
           </li>
         </ul>
       </li> -->
-        <!-- End Charts Nav -->
+    <!-- End Charts Nav -->
 
-        <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-gem"></i><span>Icons</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -151,66 +158,66 @@
           </li>
         </ul>
       </li> -->
-        <!-- End Icons Nav -->
+    <!-- End Icons Nav -->
 
-        <!-- <li class="nav-heading">Pages</li> -->
+    <!-- <li class="nav-heading">Pages</li> -->
 
-        <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="users-profile.html">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
       </li> -->
-        <!-- End Profile Page Nav -->
+    <!-- End Profile Page Nav -->
 
-        <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-faq.html">
           <i class="bi bi-question-circle"></i>
           <span>F.A.Q</span>
         </a>
       </li> -->
-        <!-- End F.A.Q Page Nav -->
+    <!-- End F.A.Q Page Nav -->
 
-        <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-contact.html">
           <i class="bi bi-envelope"></i>
           <span>Contact</span>
         </a>
       </li> -->
-        <!-- End Contact Page Nav -->
+    <!-- End Contact Page Nav -->
 
-        <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-register.html">
           <i class="bi bi-card-list"></i>
           <span>Register</span>
         </a>
       </li> -->
-        <!-- End Register Page Nav -->
+    <!-- End Register Page Nav -->
 
-        <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-login.html">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Login</span>
         </a>
       </li> -->
-        <!-- End Login Page Nav -->
+    <!-- End Login Page Nav -->
 
-        <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-error-404.html">
           <i class="bi bi-dash-circle"></i>
           <span>Error 404</span>
         </a>
       </li> -->
-        <!-- End Error 404 Page Nav -->
+    <!-- End Error 404 Page Nav -->
 
-        <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="pages-blank.html">
           <i class="bi bi-file-earmark"></i>
           <span>Blank</span>
         </a>
       </li> -->
-        <!-- End Blank Page Nav -->
+    <!-- End Blank Page Nav -->
 
-    </ul>
+  </ul>
 
 </aside>

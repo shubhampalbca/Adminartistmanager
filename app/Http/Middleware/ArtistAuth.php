@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Session;
 
-class ArtistAuth
+class UserAuth
 {
    
     public function handle(Request $request, Closure $next): Response
     {
         if(!Session::has('id'))
         {
-            return redirect('artist')->with('message', 'Invliad credential');
+            return redirect('user')->with('message', 'Invalid credential');
         }
         return $next($request);
     }

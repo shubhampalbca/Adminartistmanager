@@ -8,264 +8,294 @@ use App\Models\Manager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Admin;
-use App\Models\Artist;
 use App\Models\Event;
 use App\Models\Category;
+
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
- 
-        public function Admindashboard()
-        {
-        
+    public function Admindashboard()
+    {
         if (Auth::guard('admin')->check()) {
-            $count = DB::table('artists')->count();
-            $usercount = DB::table('users')->count();
-                return view('admin.dashboard',compact('count','usercount'));
-            } else {
-                return view('admin.login');
-            }
+            $usercount = User::count();
+            $managercount = Manager::count();
+            $eventcount = Event::count();
+            $eventsthismonth = Event::whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year)->count();
+            $eventcountprev = Event::whereMonth('created_at', now()->subMonth()->month)
+                ->whereYear('created_at', now()->subMonth()->year)->count();
+            $percentchange = $eventcountprev > 0
+                ? round((($eventsthismonth - $eventcountprev) / $eventcountprev) * 100)
+                : ($eventsthismonth > 0 ? 100 : 0);
+            return view('admin.dashboard', compact('usercount', 'managercount', 'eventcount', 'eventsthismonth', 'percentchange'));
+        } else {
+            return view('admin.login');
         }
-    
-        public function login()
-        {
+    }
+
+    public function login()
+    {
         return view("admin.login");
+    }
+
+    public function checklogin(Request $request)
+    {
+        $rules = [
+            'email' => 'required',
+            'password' => 'required',
+        ];
+        $request->validate($rules);
+        $admin = Admin::where('email', $request->email)->first();
+        if ($admin && Hash::check($request->password, $admin->password)) {
+            Auth::guard('admin')->login($admin);
+            $request->session()->put('id', $admin->id);
+            session()->flash('success', 'Admin ' . $admin->name . ' (' . $admin->email . ') successfully logged in.');
+            return redirect()->route('Admindashboard');
         }
 
-        public function checklogin(Request $request)
-        {
-            $rules = [
-               'email' => 'required',
-                'password' => 'required',
-               ]; 
-            $request->validate($rules);
-            $admin = Admin::where('email', $request->email)->first();
-            if ($admin) {
-                if ($request->password === $admin->password) {
-                    Auth::guard('admin')->login($admin);
-                        $request->session()->put('id', $admin->id);
-                        $message = 'Admin ' . $admin->name . ' (' . $admin->email . ') successfully logged in.';
-                        session()->flash('success', $message);
+        return redirect('admin')->with('error', 'Email-Address and Password Are Wrong.');
+    }
 
-                    return redirect()->route('Admindashboard');
-                } else {
-                
-                    return redirect('admin')->with('error', 'Email-Address and Password Are Wrong.');
-                }
+    public function logout()
+    {
+
+        Session::flush();
+        Auth::logout();
+        return redirect('admin');
+    }
+
+    public function category()
+    {
+
+        $Category = Category::paginate(5);
+        return view('admin/category', compact('Category'));
+    }
+
+    public function insertcategory(Request $request)
+    {
+        $Category = new Category;
+        $Category->categoryname = $request->input('categoryname');
+
+        if ($request->hasfile('categoryimage')) {
+            $file = $request->file('categoryimage');
+            $extenstion = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extenstion;
+            $file->move('uploads/catagories/', $filename);
+            $Category->categoryimage = $filename;
+        }
+
+
+        $Category->save();
+        session()->flash('success', 'Category created Successfully');
+        return redirect()->back();
+    }
+
+
+    public function adduser()
+    {
+        $category = Category::all();
+        $users = User::paginate(5);
+
+        return view('admin/user', compact('category', 'users'));
+    }
+
+    public function insertuser(Request $request)
+    {
+        $rules = [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'mobile' => 'required|unique:users,mobile',
+            'password' => 'required|string|min:6',
+            'profile' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'category' => 'nullable|string|max:255',
+        ];
+
+        $request->validate($rules);
+
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->mobile = $request->input('mobile');
+        $user->password = $request->input('password');
+        $user->status = 0;
+        $user->category = $request->input('category');
+
+        if ($request->hasFile('profile')) {
+            $file = $request->file('profile');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move('uploads/profile/', $filename);
+            $user->profile = $filename;
+        }
+
+        $user->save();
+        session()->flash('success', 'User created Successfully');
+        return redirect()->back();
+    }
+
+
+    public function active_user($id)
+    {
+        $data = User::find($id);
+        if ($data) {
+            if ($data->status) {
+                $data->status = 0;
             } else {
-            
-                return back()->with('error', 'Invalid credentials');
+                $data->status = 1;
             }
+            $data->save();
         }
-        
-        public function logout()
-        {
+        return redirect()->back();
+    }
 
-            Session::flush();
-            Auth::logout();
-            return redirect('admin');
+    public function profile()
+    {
+        if (Auth::guard('admin')->check()) {
+            $adminData = Admin::find(auth()->guard('admin')->user()->id);
+
+            return view('admin.profile', ['adminData' => $adminData]);
         }
+    }
 
-        public function category()
-        {
+    public function update_admin(Request $request, $id)
+    {
 
-            $Category = Category::paginate(5);
-            return view('admin/category', compact('Category'));
-        
-        }
+        $admin = Admin::find($id);
 
-        public function insertcategory(Request $request)
-        {
-            $Category = new Category;
-            $Category->categoryname = $request->input('categoryname');
+        $admin->name = $request->input('name');
+        $admin->email = $request->input('email');
+        $admin->mobile = $request->input('mobile');
 
-            if($request->hasfile('categoryimage'))
-            {
-                $file = $request->file('categoryimage');
-                $extenstion = $file->getClientOriginalExtension();
-                $filename = time().'.'.$extenstion;
-                $file->move('uploads/catagories/', $filename);
-                $Category->categoryimage = $filename;
+        if ($request->hasfile('profile')) {
+            $destination = 'uploads/profile/' . $admin->profile;
+            if (File::exists($destination)) {
+                File::delete($destination);
             }
-
-        
-            $Category->save();
-            session()->flash('success', 'Category created Successfully');
-            return redirect()->back();
+            $file = $request->file('profile');
+            $extenstion = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extenstion;
+            $file->move('uploads/profile/', $filename);
+            $admin->profile = $filename;
         }
 
+        $admin->update();
 
-        public function addartist()
-        {
-            $category = Category::all();
-            $artists = Artist::paginate(5);
+        return redirect()->back()->with('success', 'Admin Updated Successfully');
+    }
 
-            return view('admin/artist', compact('category', 'artists'));
+
+    public function userslist()
+    {
+        $users = User::paginate(5);
+        // print_r($users);die;
+        return view('admin/userslist', compact('users'));
+    }
+
+
+    public function userevents()
+    {
+        $events = Event::with('postable')->latest()->paginate(10);
+        return view('admin/userevents', compact('events'));
+    }
+
+    /**
+     * Admin: My Posts list and Add Post form.
+     */
+    public function adminEvents()
+    {
+        if (Auth::guard('admin')->check()) {
+            $admin = Auth::guard('admin')->user();
+            $events = Event::where('postable_type', Admin::class)->where('postable_id', $admin->id)->latest()->get();
+            return view('admin.events', compact('events'));
         }
+        return redirect('admin');
+    }
 
-        public function insertartist(Request $request)
-        {
-            $rules = [
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:artists,email',
-                'mobile' => 'required|unique:artists,mobile',
-                'password' => 'required|string|min:6',
-                'category' => 'required|string|max:255',
-                'profile' => 'image|mimes:jpeg,png,jpg,gif|max:2048', 
-            ];
+    /**
+     * Admin: Save new post.
+     */
+    public function postAdminEvents(Request $request)
+    {
+        if (Auth::guard('admin')->check()) {
+            $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'nullable|string',
+                'file' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4|max:10240',
+            ]);
+            $admin = Auth::guard('admin')->user();
+            $event = new Event;
+            $event->title = $request->input('title');
+            $event->description = $request->input('description');
+            $event->postable_type = Admin::class;
+            $event->postable_id = $admin->id;
 
-            $request->validate($rules);
-            $artist = new Artist;
-            $artist->name = $request->input('name');
-            $artist->email = $request->input('email');
-            $artist->mobile = $request->input('mobile');
-            $artist->password =  $request->input('password');
-            $artist->category = $request->input('category');
-            $artist->status = 0;
-
-            if ($request->hasFile('profile')) {
-                $file = $request->file('profile');
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
                 $extension = $file->getClientOriginalExtension();
                 $filename = time() . '.' . $extension;
-                $file->move('uploads/profile/', $filename);
-                $artist->profile = $filename;
+                $file->move('uploads', $filename);
+                $event->file = $filename;
             }
 
-            $artist->save();
-            session()->flash('success', 'Artist created Successfully');
+            $event->save();
+            session()->flash('success', 'Post created Successfully');
             return redirect()->back();
-        
+        }
+        return redirect('admin');
+    }
+
+
+
+
+    public function edituser($id)
+    {
+        $users = User::find($id);
+        $category = Category::all();
+        return view('admin/edituser', compact('users', 'category'));
+    }
+
+
+    public function updateuser(Request $request, $id)
+    {
+
+        $user = User::find($id);
+
+        $updateData = [
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'mobile' => $request->input('mobile'),
+            'category' => $request->input('category'),
+        ];
+
+        if ($request->filled('password')) {
+            $updateData['password'] = $request->input('password');
         }
 
-
-        public function active_artist($id)
-        {
-              $data=Artist::find($id);
-            if($data){
-                if($data->status){
-                $data->status=0;  
-                }
-                else
-                {
-                $data->status=1;   
-                }
-                $data->save();
+        if ($request->hasFile('profile')) {
+            $destination = 'uploads/profile/' . ($user->profile ?? '');
+            if ($user->profile && File::exists($destination)) {
+                File::delete($destination);
             }
-            return redirect()->back();
-        
+            $file = $request->file('profile');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move('uploads/profile/', $filename);
+            $updateData['profile'] = $filename;
         }
 
-        public function profile()        
-        {
-            if (Auth::guard('admin')->check()) {
-                $adminData = Admin::find(auth()->guard('admin')->user()->id);
-               
-                return view('admin.profile', ['adminData' => $adminData]);
-            } 
-        }
+        $user->update($updateData);
 
-        public function update_admin(Request $request, $id)
-        {
-           
-            $admin = Admin::find($id);
-    
-            $admin->name = $request->input('name');
-            $admin->email = $request->input('email');
-            $admin->mobile = $request->input('mobile');
-
-            if($request->hasfile('profile'))
-            {
-                $destination = 'uploads/profile/'. $admin->profile;
-                if(File::exists( $destination))
-                {
-                    File::delete($destination);
-                }
-                $file = $request->file('profile');
-                $extenstion = $file->getClientOriginalExtension();
-                $filename = time().'.'.$extenstion;
-                $file->move('uploads/profile/', $filename);
-                $admin->profile = $filename;
-            }
-
-            $admin->update();
-        
-            return redirect()->back()->with('success', 'Admin Updated Successfully');
-        }
-           
-
-        public function userslist()
-        {     
-            $users = User::paginate(5);
-            // print_r($users);die;
-            return view('admin/userslist', compact('users'));
-        }
+        session()->flash('success', 'User updated Successfully');
+        return redirect()->back();
+    }
 
 
-        public function artistevents ()
-        {     
-            $events = Event::paginate(10);
-
-            $events = Event::select('events.id', 'events.title', 'artists.name', 'events.description', 'events.file','events.created_at')
-            ->join('artists', 'artists.id', '=', 'events.artist_id')
-            ->paginate(10);
-            return view('admin/artistevents', compact('events'));
-        }
-            
-           
-
-
-        public function editartist($id)
-        {
-            $artists = Artist::find($id);
-
-            return view('admin/editartist', compact('artists'));
-        }
-
-
-        public function updateartist(Request $request, $id)
-        {
-        
-            $artist = Artist::find($id);
-            $artist->name = $request->input('name');
-            $artist->email = $request->input('email');
-            $artist->mobile = $request->input('mobile');
-            $artist->password =  $request->input('password');
-            $artist->category = $request->input('category');
-           
-         
-            if($request->hasfile('profile'))
-            {
-                $destination = 'uploads/profile/'. $artist->profile;
-                if(File::exists( $destination))
-                {
-                    File::delete($destination);
-                }
-                $file = $request->file('profile');
-                $extenstion = $file->getClientOriginalExtension();
-                $filename = time().'.'.$extenstion;
-                $file->move('uploads/profile/', $filename);
-                $artist->profile = $filename;
-            }
-            // dd($artist->save());
-          
-            $artist->update();
-
-            session()->flash('success', 'Artist created Successfully');
-            return redirect()->back();
-        
-        }
-
-
-        public function managerlist()
-        {     
-            $manager = Manager::paginate(5);
-            // print_r($users);die;
-            return view('admin/managerlist', compact('manager'));
-        }
-
-
+    public function managerlist()
+    {
+        $manager = Manager::paginate(5);
+        // print_r($users);die;
+        return view('admin/managerlist', compact('manager'));
+    }
 }

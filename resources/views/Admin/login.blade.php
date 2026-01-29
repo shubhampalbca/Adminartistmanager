@@ -1,188 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .login-block {
-            background: linear-gradient(to bottom, #FFB88C, #DE6262);
-            float: left;
-            width: 100%;
-            padding: 50px 0;
-            height: 100vh;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
             align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-        .banner-sec {
-            background: url(https://static.pexels.com/photos/33972/pexels-photo.jpg) no-repeat left bottom;
-            background-size: cover;
-            border-radius: 0 10px 10px 0;
-            padding: 0;
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            width: 100%;
+            max-width: 450px;
+            animation: slideUp 0.5s ease-out;
         }
-        .container {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 15px 20px 0px rgba(0,0,0,0.1);
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .carousel-inner {
-            border-radius: 0 10px 10px 0;
-        }
-        .carousel-caption {
-            text-align: left;
-            left: 5%;
-        }
-        .login-sec {
-            padding: 50px 30px;
-            position: relative;
-        }
-        .login-sec .copy-text {
-            position: absolute;
-            width: 80%;
-            bottom: 20px;
-            font-size: 13px;
+
+        .login-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
             text-align: center;
+            color: white;
         }
-        .login-sec .copy-text i {
-            color: #FEB58A;
-        }
-        .login-sec .copy-text a {
-            color: #E36262;
-        }
-        .login-sec h2 {
-            margin-bottom: 30px;
-            font-weight: 800;
-            font-size: 30px;
-            color: #DE6262;
-        }
-        .login-sec h2:after {
-            content: " ";
-            width: 100px;
-            height: 5px;
-            background: #FEB58A;
+
+        .login-header i {
+            font-size: 48px;
+            margin-bottom: 15px;
             display: block;
-            margin-top: 20px;
-            border-radius: 3px;
-            margin-left: auto;
-            margin-right: auto;
+            animation: pulse 2s infinite;
         }
-        .btn-login {
-            background: #DE6262;
-            color: #fff;
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .login-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .login-header p {
+            margin-top: 10px;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .login-body {
+            padding: 40px 30px;
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
             font-weight: 600;
-        }
-        .banner-text {
-            width: 70%;
-            position: absolute;
-            bottom: 40px;
-            padding-left: 20px;
-        }
-        .banner-text h2 {
-            color: #fff;
-            font-weight: 600;
-        }
-        .banner-text h2:after {
-            content: " ";
-            width: 100px;
-            height: 5px;
-            background: #FFF;
+            color: #333;
+            margin-bottom: 8px;
             display: block;
-            margin-top: 20px;
-            border-radius: 3px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .banner-text p {
-            color: #fff;
-        }
-        .d-block.img-fluid {
-            max-width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .section-container-top {
+
+        .input-wrapper {
             position: relative;
-            top: 4rem;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px 15px 12px 45px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-control:focus {
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .form-check-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .form-check-input {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .text-danger {
+            font-size: 13px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #888;
+            font-size: 12px;
+        }
+
+        .footer-text i {
+            color: #e74c3c;
+            margin: 0 3px;
+        }
+
+        @media (max-width: 576px) {
+            .login-header {
+                padding: 30px 20px;
+            }
+
+            .login-body {
+                padding: 30px 20px;
+            }
+
+            .login-header h2 {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
+
 <body>
-<section class="login-block">
-    <div class="container section-container-top">
-        <div class="row">
-            <div class="col-md-4 login-sec">
-                <h2 class="text-center">Admin Login</h2>
-              @if (session('error'))
-                    <h6 class="alert alert-danger">{{ session('error') }}</h6>
-                @endif
-                <form class="login-form" action="{{ url('admin/login')}}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="exampleInputEmail1" class="text-uppercase">Email</label>
-                        <input type="text" class="form-control" name="email" placeholder="Enter Email">
-                        @if ($errors->has('email'))
-                            <span class="text-danger">{{ $errors->first('email') }}</span>
-                        @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1" class="text-uppercase">Password</label>
-                        <input type="password" class="form-control" name="password" placeholder="Password">
-                        @if ($errors->has('password'))
-                            <span class="text-danger">{{ $errors->first('password') }}</span>
-                        @endif
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label">
-                            <input type="checkbox" class="form-check-input">
-                            <small>Remember Me</small>
-                        </label>
-                        <button type="submit" class="btn btn-login float-right">Submit</button>
-                    </div>
-                </form>
-                <div class="copy-text">Created with <i class="fa fa-heart"></i> by <a href="#">Grafreez.com</a></div>
+    <div class="login-container">
+        <div class="login-header">
+            <i class="fas fa-shield-alt"></i>
+            <h2>Admin Login</h2>
+            <p>Welcome back! Please login to continue</p>
+        </div>
+
+        <div class="login-body">
+            @if (session('error'))
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
             </div>
-            <div class="col-md-8 banner-sec" style="padding-right: 0!important;">
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner" role="listbox">
-                        <div class="carousel-item active">
-                            <img class="d-block img-fluid" src="https://static.pexels.com/photos/33972/pexels-photo.jpg" alt="First slide">
-                            <div class="carousel-caption d-none d-md-block">
-                                <div class="banner-text">
-                                    <h2>This is Heaven</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block img-fluid" src="https://images.pexels.com/photos/7097/people-coffee-tea-meeting.jpg" alt="Second slide">
-                            <div class="carousel-caption d-none d-md-block">
-                                <div class="banner-text">
-                                    <h2>This is Heaven</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img class="d-block img-fluid" src="https://images.pexels.com/photos/872957/pexels-photo-872957.jpeg" alt="Third slide">
-                            <div class="carousel-caption d-none d-md-block">
-                                <div class="banner-text">
-                                    <h2>This is Heaven</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-                                </div>
-                            </div>
-                        </div>
+            @endif
+
+            <form class="login-form" action="{{ url('admin/login') }}" method="POST">
+                @csrf
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            value="{{ old('email') }}"
+                            required>
                     </div>
+                    @if ($errors->has('email'))
+                    <span class="text-danger">
+                        <i class="fas fa-exclamation-circle"></i> {{ $errors->first('email') }}
+                    </span>
+                    @endif
                 </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required>
+                    </div>
+                    @if ($errors->has('password'))
+                    <span class="text-danger">
+                        <i class="fas fa-exclamation-circle"></i> {{ $errors->first('password') }}
+                    </span>
+                    @endif
+                </div>
+
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox"
+                            class="form-check-input"
+                            name="remember"
+                            id="remember">
+                        <span>Remember Me</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-login">
+                    <i class="fas fa-sign-in-alt me-2"></i>Login
+                </button>
+            </form>
+
+            <div class="footer-text">
+                <i class="fas fa-heart"></i> Admin Art Manager
             </div>
         </div>
     </div>
-</section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

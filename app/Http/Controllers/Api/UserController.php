@@ -16,117 +16,112 @@ use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    
-       //this register code is email otp //  
 
-        public function register(Request $request)
-        {
+    //this register code is email otp //  
 
-            
-            $validate = Validator::make($request->all(), [
-                "name" => "required|string|min:2|max:100",
-                "email" => "required|string|email|max:100",
-                "password" => "required|confirmed|min:6",
-                "mobile" => "required|string|min:10|max:15", 
-            ]);
-            if ($validate->fails()) {
-                return response()->json($validate->errors()); 
+    public function register(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            "name" => "required|string|min:2|max:100",
+            "email" => "required|string|email|max:100",
+            "password" => "required|min:6",
+            "mobile" => "required|string|min:10|max:15",
+        ]);
+        if ($validate->fails()) {
+            return response()->json($validate->errors());
+        }
+        $email = $request->input('email');
+        $mobile = $request->input('mobile');
+        $user = User::where('email', $email)->first();
+        if ($user) { // If user exists
+            if ($user->is_verified) { // Check if the user is already verified
+                return response()->json([
+                    "status" => "already_registered",
+                    "message" => "User already registered and verified.",
+                ]);
             }
-            $email = $request->input('email');
-            $mobile = $request->input('mobile'); 
-            $user = User::where('email', $email)->first();
-            if ($user) { // If user exists
-                if ($user->is_verified) { // Check if the user is already verified
-                    return response()->json([
-                        "status" => "already_registered",
-                        "message" => "User already registered and verified.",
-                    ]);
-                }
-                // Update user data
-                $user->name = $request->input('name');
-                $user->mobile = $mobile; // Update the mobile field
-                $user->password = bcrypt($request->input('password'));
-                $user->otp = mt_rand(1000, 9999); // Generate a random OTP (One-Time Password)
-                $user->otp_expiration = now()->addMinutes(15); // Set OTP expiration time
-                $user->save(); // Save user data
-            } else { // If user does not exist
-                // Create a new user instance
-                $user = new User();
-                $user->name = $request->input('name');
-                $user->email = $email;
-                $user->mobile = $mobile; // Add mobile field to the new user
-                $user->password = bcrypt($request->input('password'));
-                $user->otp = mt_rand(1000, 9999); // Generate a random OTP (One-Time Password)
-                $user->otp_expiration = now()->addMinutes(15); // Set OTP expiration time
-                $user->is_verified = 0; // Set user verification status to 0 (not verified)
-                $user->save(); // Save user data
-            }
+            // Update user data
+            $user->name = $request->input('name');
+            $user->mobile = $mobile; // Update the mobile field
+            $user->password = bcrypt($request->input('password'));
+            $user->otp = mt_rand(1000, 9999); // Generate a random OTP (One-Time Password)
+            $user->otp_expiration = now()->addMinutes(15); // Set OTP expiration time
+            $user->save(); // Save user data
+        } else { // If user does not exist
+            // Create a new user instance
+            $user = new User();
+            $user->name = $request->input('name');
+            $user->email = $email;
+            $user->mobile = $mobile; // Add mobile field to the new user
+            $user->password = bcrypt($request->input('password'));
+            $user->otp = mt_rand(1000, 9999); // Generate a random OTP (One-Time Password)
+            $user->otp_expiration = now()->addMinutes(15); // Set OTP expiration time
+            $user->is_verified = 0; // Set user verification status to 0 (not verified)
+            $user->save(); // Save user data
+        }
+        // Store email in the session
+        // Prepare data for the email
+        $mailData = [
+            'otp' => $user->otp,
+            'name' => $request->input('name'),
+        ];
+        // Send an email with OTP to the user
+        Mail::to($email)->send(new DemoMail($mailData));
+        // Return response indicating OTP has been sent
+        return response()->json([
+            "status" => "otp_sent",
+            "message" => "OTP sent to your email. Please enter the OTP within 15 minutes to complete registration.",
+        ]);
+    }
 
-            // Store email in the session
-            
 
-            // Prepare data for the email
-            $mailData = [
-                'otp' => $user->otp,
-                'name' => $request->input('name'),
-            ];
-            // Send an email with OTP to the user
-            Mail::to($email)->send(new DemoMail($mailData));
-            // Return response indicating OTP has been sent
+    public function verifyOTP(Request $request, $email)
+    {
+        $validate = Validator::make($request->all(), [
+            "otp" => "required|digits:4",
+        ]);
+        if ($validate->fails()) {
+            return response()->json($validate->errors());
+        }
+        $user = User::where('email', $email)->first();
+
+        if (!$user || !$user->otp || !$user->otp_expiration) {
             return response()->json([
-                "status" => "otp_sent",
-                "message" => "OTP sent to your email. Please enter the OTP within 15 minutes to complete registration.",
+                "status" => "error",
+                "message" => "OTP expired or invalid. Please request a new OTP.",
             ]);
         }
-
-
-        public function verifyOTP(Request $request, $email)
-        {
-            $validate = Validator::make($request->all(), [
-                "otp" => "required|digits:4",
+        if ($request->input('otp') == $user->otp && now()->lt($user->otp_expiration)) {
+            $user->is_verified = 1;
+            $user->otp = null;
+            $user->otp_expiration = null;
+            $user->save();
+            $successData = [
+                'id' => $user->id,
+                'email' => $user->email,
+                'name' =>  $user->name,
+            ];
+            // print_r($successData);die;
+            Mail::to($email)->send(new SuccessMail($successData));
+            return response()->json([
+                "status" => "success",
+                "message" => "Registration successful!",
+                "user_id" => $user->id,
+                "email" => $user->email,
+                "name" => $user->name,
             ]);
-            if ($validate->fails()) {
-                return response()->json($validate->errors());
-            }
-            $user = User::where('email', $email)->first();
-
-            if (!$user || !$user->otp || !$user->otp_expiration) {
-                return response()->json([
-                    "status" => "error",
-                    "message" => "OTP expired or invalid. Please request a new OTP.",
-                ]);
-            }
-            if ($request->input('otp') == $user->otp && now()->lt($user->otp_expiration)) {
-                $user->is_verified = 1;
-                $user->otp = null;
-                $user->otp_expiration = null;
-                $user->save();
-                $successData = [
-                    'id' => $user->id,
-                    'email' => $user->email,
-                    'name' =>  $user->name,
-                ];
-                // print_r($successData);die;
-                Mail::to($email)->send(new SuccessMail($successData));
-                return response()->json([
-                    "status" => "success",
-                    "message" => "Registration successful!",
-                    "user_id" => $user->id,
-                    "email" => $user->email,
-                    "name" => $user->name,
-                ]);
-            } else {
-                return response()->json([
-                    "status" => "error",
-                    "message" => "Invalid OTP. Please try again.",
-                ]);
-            }
+        } else {
+            return response()->json([
+                "status" => "error",
+                "message" => "Invalid OTP. Please try again.",
+            ]);
         }
-       //this register code is email otp 
+    }
+    //this register code is email otp 
 
 
 
-       //this register code is mobile otp //
+    //this register code is mobile otp //
 
     //     public function register(Request $request)
     //     {
@@ -193,13 +188,13 @@ class UserController extends Controller
     //                 ]   
     //             );
     //         } catch (Exception $e) {
-                
+
     //             return response()->json([
     //                 "status" => "error",
     //                 "message" => "Failed to send OTP via Twilio.",
     //             ]);
     //         }
- 
+
     //         // Store mobile in the session
     //         $request->session()->put('mobile', $mobile);
     //         return response()->json([
@@ -208,8 +203,8 @@ class UserController extends Controller
     //         ]);
     //     }
 
- 
-      
+
+
 
     //    public function verifyOTP(Request $request, $identifier)
     //     {
@@ -281,44 +276,44 @@ class UserController extends Controller
     //         }
     //     }
 
-        
+
 
     public function login(Request $request)
     {
-       
+
         $validate = Validator::make($request->all(), [
             "email" => "required|string|email",
             "password" => "required|string",
         ]);
 
         if ($validate->fails()) {
-          
+
             return response()->json($validate->errors(), 400);
         }
 
-    
+
         $credentials = $validate->validated();
-       
+
         $user = User::where('email', $credentials['email'])
-        ->first();
+            ->first();
         if (!$user) {
-     
+
             return response()->json([
                 "success" => false,
                 "message" => "User not found",
             ], 400);
         }
 
-    
+
         if (!$user->is_verified) {
-        
+
             return response()->json([
                 "success" => false,
                 "message" => "User is not verified",
             ], 400);
         }
 
-  
+
         return response()->json([
             "success" => true,
             "user" => [
@@ -328,15 +323,12 @@ class UserController extends Controller
                 "mobile" => $user->mobile,
             ],
         ]);
-
     }
-    
+
 
 
     //profile api
 
-    
-  
     public function profile_update(Request $request, $id)
     {
         if (!$request->hasFile("user_profile")) {
@@ -387,11 +379,10 @@ class UserController extends Controller
             ], 200);
         }
     }
-    
 
-    public function hello(){
+
+    public function hello()
+    {
         echo "jkhsjkdfghfjkd";
     }
-
-
 }

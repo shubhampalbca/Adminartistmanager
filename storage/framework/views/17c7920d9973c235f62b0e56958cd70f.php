@@ -1,105 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <?php echo $__env->make('admin/include/headerlink', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-      <title> Admin-Dashboard - </title>
-     
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> 
-   </head>
 
-   <style></style>
-   <body>
+<head>
+   <?php echo $__env->make('admin/include/headerlink', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+   <title> Admin-Dashboard - </title>
 
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
 
-      <?php echo $__env->make('admin/include/header', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-      <?php echo $__env->make('admin/include/sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-      <main id="main" class="main">
-         <div class="pagetitle">
-            <h1>Dashboard</h1>
-            <nav>
-               <ol class="breadcrumb">
-            
-                  <li class="breadcrumb-item active">Dashboard</li>
-               </ol>
-            </nav>
-         </div>
-         <!-- End Page Title -->
-         <section class="section dashboard">
-            <div class="row">
-               <!-- Left side columns -->
-               <div class="col-lg-12">
-                  <div class="row">
-                     <!-- Sales Card -->
-                     <div class="col-xxl-4 col-md-4">
-                        <div class="card info-card sales-card  bg-c-green-in">
-                          <div class="card-body">
-                           <p>Total Artist <span>| Today</span></p>
-                           <div class="d-flex align-items-center">
-                              <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-people"></i>
-                              </div>
-                              <div class="ps-3">
-                                    <p><?php echo e($count); ?></p>
-                              </div>
-                           </div>
-                        </div>
+<style></style>
+
+<body>
 
 
+   <?php echo $__env->make('admin/include/header', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+   <?php echo $__env->make('admin/include/sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+   <main id="main" class="main">
+      <div class="pagetitle">
+         <h1>Dashboard</h1>
+         <nav>
+            <ol class="breadcrumb">
 
-
-                        </div>
+               <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+         </nav>
+      </div>
+      <!-- End Page Title -->
+      <section class="section dashboard">
+         <div class="row">
+            <!-- Card 1: Total Users -->
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-3 mb-lg-0">
+               <div class="card info-card sales-card h-100 border-0 shadow-sm">
+                  <div class="card-body d-flex align-items-center justify-content-between">
+                     <div>
+                        <p class="text-uppercase text-muted small mb-1">Total Users</p>
+                        <h4 class="mb-0 fw-bold"><?php echo e($usercount); ?></h4>
                      </div>
-                     <div class="col-xxl-4 col-md-4">
-                        <div class="card info-card sales-card bg-c-pink-in">
-                           
-                           <div class="card-body">
-                              <p>Total Users <span>| Today</span></p>
-                              <div class="d-flex align-items-center">
-                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-people"></i>
-                                 </div>
-                                 <div class="ps-3">
-                                    <hp><?php echo e($usercount); ?></p>
-                                  
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="col-xxl-4 col-md-4">
-                        <div class="card info-card bg-c-blue-in sales-card ">
-                           <div class="filter">
-                           
-                              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                 <li class="dropdown-header text-start">
-                                    <h6>Filter</h6>
-                                 </li>
-                                 <li><a class="dropdown-item" href="#">Today</a></li>
-                                 <li><a class="dropdown-item" href="#">This Month</a></li>
-                                 <li><a class="dropdown-item" href="#">This Year</a></li>
-                              </ul>
-                           </div>
-                           <div class="card-body">
-                              <p>Sales <span>| Today</span></p>
-                              <div class="d-flex align-items-center">
-                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-cart"></i>
-                                 </div>
-                                 <div class="ps-3">
-                                    <p>145<p>
-                                    <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
+                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary" style="width:56px;height:56px;">
+                        <i class="bi bi-people fs-4"></i>
                      </div>
                   </div>
                </div>
             </div>
-         </section>
-      </main>
-      <?php echo $__env->make('admin/include/footer', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-   </body>
+            <!-- Card 2: Total Managers -->
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-3 mb-lg-0">
+               <div class="card info-card sales-card h-100 border-0 shadow-sm">
+                  <div class="card-body d-flex align-items-center justify-content-between">
+                     <div>
+                        <p class="text-uppercase text-muted small mb-1">Total Managers</p>
+                        <h4 class="mb-0 fw-bold"><?php echo e($managercount); ?></h4>
+                     </div>
+                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success" style="width:56px;height:56px;">
+                        <i class="bi bi-person-badge fs-4"></i>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- Card 3: Events This Month -->
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-3 mb-lg-0">
+               <div class="card info-card sales-card h-100 border-0 shadow-sm">
+                  <div class="card-body d-flex align-items-center justify-content-between">
+                     <div>
+                        <p class="text-uppercase text-muted small mb-1">Events This Month</p>
+                        <h4 class="mb-0 fw-bold"><?php echo e($eventsthismonth); ?></h4>
+                        <span class="text-<?php echo e($percentchange >= 0 ? 'success' : 'danger'); ?> small fw-bold"><?php echo e($percentchange); ?>%</span>
+                        <span class="text-muted small"> vs last month</span>
+                     </div>
+                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-info bg-opacity-10 text-info" style="width:56px;height:56px;">
+                        <i class="bi bi-calendar-event fs-4"></i>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- Card 4: Total Events -->
+            <div class="col-xxl-3 col-lg-3 col-md-6 mb-3 mb-lg-0">
+               <div class="card info-card sales-card h-100 border-0 shadow-sm">
+                  <div class="card-body d-flex align-items-center justify-content-between">
+                     <div>
+                        <p class="text-uppercase text-muted small mb-1">Total Events</p>
+                        <h4 class="mb-0 fw-bold"><?php echo e($eventcount); ?></h4>
+                     </div>
+                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-warning bg-opacity-10 text-warning" style="width:56px;height:56px;">
+                        <i class="bi bi-collection fs-4"></i>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
+   </main>
+   <?php echo $__env->make('admin/include/footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+</body>
+
 </html>
 <?php if(session('success')): ?>
 <div class="modal fade custom-modal" id="successModal">
@@ -118,11 +110,11 @@
    </div>
 </div>
 <script>
-   $(document).ready(function () {
-       $("#successModal").modal('show');
-       $("#successModal button[data-dismiss='modal']").on('click', function () {
-           $("#successModal").modal('hide');
-       });
+   $(document).ready(function() {
+      $("#successModal").modal('show');
+      $("#successModal button[data-dismiss='modal']").on('click', function() {
+         $("#successModal").modal('hide');
+      });
    });
 </script>
 <?php endif; ?><?php /**PATH C:\wamp64\www\adminartimanager\resources\views/admin/dashboard.blade.php ENDPATH**/ ?>

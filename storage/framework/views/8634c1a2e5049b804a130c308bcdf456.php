@@ -1,39 +1,37 @@
-
-
 <header id="header" class="header fixed-top d-flex align-items-center header-bg-col">
 
-<div class="d-flex align-items-center justify-content-between">
-  <a href="<?php echo e(url('Admindashboard')); ?>" class="logo d-flex align-items-center">
+  <div class="d-flex align-items-center justify-content-between">
+    <a href="<?php echo e(url('Admindashboard')); ?>" class="logo d-flex align-items-center">
 
-    <span class="d-none d-lg-block">Admin Dasboard</span>
-  </a>
-  <i class="bi bi-list toggle-sidebar-btn"></i>
-</div><!-- End Logo -->
+      <span class="d-none d-lg-block">Admin Dasboard</span>
+    </a>
+    <i class="bi bi-list toggle-sidebar-btn"></i>
+  </div><!-- End Logo -->
 
-<div class="search-bar">
-  <form class="search-form d-flex align-items-center" method="POST" action="#">
-    <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-    <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-  </form>
-</div><!-- End Search Bar -->
+  <div class="search-bar">
+    <form class="search-form d-flex align-items-center" method="POST" action="#">
+      <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+      <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+    </form>
+  </div><!-- End Search Bar -->
 
-<nav class="header-nav ms-auto">
-  <ul class="d-flex align-items-center">
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
 
-    <li class="nav-item d-block d-lg-none">
-      <a class="nav-link nav-icon search-bar-toggle " href="#">
-        <i class="bi bi-search bi-bell-bg-h"></i>
-      </a>
-    </li><!-- End Search Icon-->
+      <li class="nav-item d-block d-lg-none">
+        <a class="nav-link nav-icon search-bar-toggle " href="#">
+          <i class="bi bi-search bi-bell-bg-h"></i>
+        </a>
+      </li><!-- End Search Icon-->
 
-    <li class="nav-item dropdown">
+      <li class="nav-item dropdown">
 
-      <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-        <i class="bi bi-bell bi-bell-bg-h"></i>
-        <span class="badge bg-primary badge-number">4</span>
-      </a><!-- End Notification Icon -->
+        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <i class="bi bi-bell bi-bell-bg-h"></i>
+          <span class="badge bg-primary badge-number">4</span>
+        </a><!-- End Notification Icon -->
 
-      <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+        <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
         <li class="dropdown-header">
           You have 4 new notifications
           <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
@@ -98,18 +96,18 @@
         </li>
 
       </ul> -->
-      <!-- End Notification Dropdown Items -->
+        <!-- End Notification Dropdown Items -->
 
-    </li><!-- End Notification Nav -->
+      </li><!-- End Notification Nav -->
 
-    <li class="nav-item dropdown">
+      <li class="nav-item dropdown">
 
-      <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-        <i class="bi bi-chat-left-text  bi-bell-bg-h"></i>
-        <span class="badge bg-success badge-number">3</span>
-      </a><!-- End Messages Icon -->
+        <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <i class="bi bi-chat-left-text  bi-bell-bg-h"></i>
+          <span class="badge bg-success badge-number">3</span>
+        </a><!-- End Messages Icon -->
 
-      <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+        <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
         <li class="dropdown-header">
           You have 3 new messages
           <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
@@ -166,54 +164,58 @@
 
       </ul> -->
 
-    </li>
+      </li>
 
-    <li class="nav-item dropdown pe-3">
+      <li class="nav-item dropdown pe-3">
 
-      <!-- <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+        <!-- <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
         <img src="<?php echo e(asset('uploads/profile/' . Auth::guard('admin')->user()->profile)); ?>"  class="rounded-circle"  alt="Cinque Terre"> 
         <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo e(Auth::guard('admin')->user()->name); ?></span>
       </a> -->
 
-      <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"  style="background-color: #FFFFFF; color: #000000;">
-    <img src="<?php echo e(asset('uploads/profile/' . Auth::guard('admin')->user()->profile)); ?>" class="rounded-circle" alt="Cinque Terre">
-    <span class="d-none d-md-block dropdown-toggle ps-2" style="color: #000;"><?php echo e(Auth::guard('admin')->user()->name); ?></span>
-    </a>
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" style="background-color: #FFFFFF; color: #000000;">
+          <?php if(!empty(Auth::guard('admin')->user()->profile)): ?>
+          <img src="<?php echo e(asset('uploads/profile/' . Auth::guard('admin')->user()->profile)); ?>" class="rounded-circle" alt="Profile" style="width:36px;height:36px;object-fit:cover;">
+          <?php else: ?>
+          <span class="rounded-circle bg-secondary d-inline-flex align-items-center justify-content-center text-white" style="width:36px;height:36px;font-size:1rem;"><?php echo e(substr(Auth::guard('admin')->user()->name ?? 'A', 0, 1)); ?></span>
+          <?php endif; ?>
+          <span class="d-none d-md-block dropdown-toggle ps-2" style="color: #000;"><?php echo e(Auth::guard('admin')->user()->name); ?></span>
+        </a>
 
 
-      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-        <li class="dropdown-header">
-        <h6><?php echo e(Auth::guard('admin')->user()->name); ?></h6>
-          <span>Admin</span>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6><?php echo e(Auth::guard('admin')->user()->name); ?></h6>
+            <span>Admin</span>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
 
-        <li>
-          <a class="dropdown-item d-flex align-items-center" href="<?php echo e(url('profile')); ?>">
-            <i class="bi bi-person"></i>
-            <span>My Profile</span>
-          </a>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="<?php echo e(url('profile')); ?>">
+              <i class="bi bi-person"></i>
+              <span>My Profile</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
 
-       
 
-        <li>
-          <a class="dropdown-item d-flex align-items-center" href="<?php echo e(url('logout')); ?>">
-            <i class="bi bi-box-arrow-right"></i>
-            <span>Sign Out</span>
-          </a>
-        </li>
 
-      </ul><!-- End Profile Dropdown Items -->
-    </li><!-- End Profile Nav -->
+          <li>
+            <a class="dropdown-item d-flex align-items-center" href="<?php echo e(url('logout')); ?>">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Sign Out</span>
+            </a>
+          </li>
 
-  </ul>
-</nav>
-<!-- End Icons Navigation -->
+        </ul><!-- End Profile Dropdown Items -->
+      </li><!-- End Profile Nav -->
+
+    </ul>
+  </nav>
+  <!-- End Icons Navigation -->
 
 </header><?php /**PATH C:\wamp64\www\adminartimanager\resources\views/admin/include/header.blade.php ENDPATH**/ ?>
